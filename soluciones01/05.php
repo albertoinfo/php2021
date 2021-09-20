@@ -61,7 +61,10 @@ echo "2º Número : $num2 </br> ";
 		</tr>
 		<tr>
 			<td><?php echo "$num1 ** $num2 " ?></td>
-			<td align="right"><?php echo $num1 ** $num2 ?></td>
+			<td class="der"><?php 
+			  
+			  echo  $num1 ** $num2;   
+			  ?></td>
 		</tr>
 	</table>
 <hr>

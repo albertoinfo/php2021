@@ -1,7 +1,9 @@
 <html>
 <head>
  <meta charset="UTF-8">
-<title>Ejercicio 03 - La pirámide</title>
+ <title>Ejercicio 03 - La pirámide</title>
+<style>
+</style>
 </head>
 <body>
 <?php

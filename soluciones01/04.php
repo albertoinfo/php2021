@@ -16,14 +16,8 @@ do {
     $numero = random_int(1, 10);
     $contadorintentos ++;
     if ($numero == 6) {
-        if ($numAnterior == 6){
-            // Hay otro seis
-            $contador6++;
-        }
-        else {
             // Hay un seis
-            $contador6 = 1;
-        }
+            $contador6++;
     }
     else {
         // No hay seis
