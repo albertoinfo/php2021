@@ -1,3 +1,8 @@
+<?php
+$num1 = random_int(1, 10);
+$num2 = random_int(1, 10);
+
+?>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -31,12 +36,10 @@ th {
 
 <body>
 <h1>Ejercicio 5</h1>
-<?php
-$num1 = random_int(1, 10);
-$num2 = random_int(1, 10);
-echo "1º Número : $num1 </br> "; 
-echo "2º Número : $num2 </br> ";
-?>
+
+1º Número : <?= $num1 ?></br>  
+2º Número : <?= $num2 ?></br> 
+
 <br>
 		<table>
 		<tr>
@@ -44,27 +47,24 @@ echo "2º Número : $num2 </br> ";
 			<th style="color: blue;">Resultado</th>
 		</tr>
 		<tr>
-			<td><?php echo "$num1 + $num2 " ?></td>
-			<td class="der"><?php echo $num1 + $num2 ?></td>
+			<td><?= $num1 ?> + <?= $num2 ?> </td>
+			<td class="der"><?= $num1 + $num2 ?></td>
 		</tr>
 		<tr>
-			<td><?php echo "$num1 - $num2 " ?></td>
-			<td class="der"><?php echo $num1 - $num2 ?></td>
+			<td><?=" $num1 -  $num2" ?></td>
+			<td class="der"><?= $num1 - $num2 ?></td>
 		</tr>
 		<tr>
-			<td><?php echo "$num1 * $num2 " ?></td>
-			<td class="der"><?php echo $num1 * $num2 ?></td>
+			<td><?=" $num1  *  $num2" ?></td>
+			<td class="der"><?= $num1 * $num2 ?></td>
 		</tr>
 		<tr>
-			<td><?php echo "$num1 % $num2  " ?></td>
-			<td class="der"><?php echo $num1 % $num2 ?></td>
+			<td><?=" $num1 /  $num2 " ?></td>
+			<td class="der"><?= $num1 / $num2 ?></td>
 		</tr>
 		<tr>
-			<td><?php echo "$num1 ** $num2 " ?></td>
-			<td class="der"><?php 
-			  
-			  echo  $num1 ** $num2;   
-			  ?></td>
+			<td><?=" $num1  **  $num2 " ?> </td>
+			<td class="der"><?= $num1 ** $num2 ?></td>
 		</tr>
 	</table>
 <hr>
