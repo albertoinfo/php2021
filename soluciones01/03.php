@@ -10,10 +10,12 @@
    $n1 =  random_int(1,9);
    $n2 = $n1 -1;
    ?>
-   <code><?php
+   <!-- Utilizo code para que sea monospace -->
+   <code>
+    <?php
    for($i = 1; $i <= $n1;$i++){
        for($j = $n2; $j > 0;$j--){
-           echo "&nbsp";
+           echo "&nbsp"; // Caracter espacio en HTML
        }
        $n2--;
        for($k = 1; $k <=2*$i -1;$k++){

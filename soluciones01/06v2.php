@@ -22,7 +22,8 @@
         
         <?php for ($i=1; $i <= 10; $i++) :?>
           <tr>
-          <td><?= " $num x $i "?>=  </td><td style="text-align:right"><?= $i*$num ?></td>
+          <td><?= " $num x $i "?>=  </td><td style="text-align:right">
+          <?= $i*$num ?></td>
           </tr>
         <?php endfor ?>
         

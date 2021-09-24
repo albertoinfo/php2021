@@ -1,7 +1,6 @@
 <?php
 $num1 = random_int(1, 10);
 $num2 = random_int(1, 10);
-
 ?>
 <html>
 <head>
