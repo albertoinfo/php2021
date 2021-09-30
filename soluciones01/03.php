@@ -7,20 +7,22 @@
 </head>
 <body>
 <?php
-   $n1 =  random_int(1,9);
-   $n2 = $n1 -1;
+   $numero =  random_int(1,9);
+   $contEspacios = $numero -1;
+   $contAsteriscos = 1;
    ?>
    <!-- Utilizo code para que sea monospace -->
    <code>
     <?php
-   for($i = 1; $i <= $n1;$i++){
-       for($j = $n2; $j > 0;$j--){
+   for($i = 1; $i <=$numero;$i++){
+       for($j = 1; $j<=$contEspacios; $j++){
            echo "&nbsp"; // Caracter espacio en HTML
        }
-       $n2--;
-       for($k = 1; $k <=2*$i -1;$k++){
+       for($k = 1; $k<=$contAsteriscos;$k++){
            echo "*";
        }
+       $contAsteriscos +=2;
+       $contEspacios--;
        echo "<br/>";
        
    }
