@@ -1,3 +1,6 @@
+<?php
+// PRIMERA VERSIÓN CALCULO EL MÁXIMO MANUALMENTE
+?>
 <html>
 <head>
 <meta charset="UTF-8">
