@@ -34,4 +34,7 @@ $deportes = array(
 		</tr>
 <?php }?>
 	</table>
+	<hr>
+<?php show_source(__FILE__); ?>
+<hr>
 </html>

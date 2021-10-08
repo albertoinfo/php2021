@@ -43,6 +43,7 @@
             }
             if ($veces > $maxrepes) {
                 $valor = $tabla[$i];
+                $maxrepes = $veces;
             }
         }
         return $valor;
