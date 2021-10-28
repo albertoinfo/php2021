@@ -20,12 +20,17 @@ if($_SERVER['REQUEST_METHOD'] == "GET"){ ?>
      <fieldset>
      <legend>Datos para registrar:</legend>
 	
-	<input type="text" name="nombre" placeholder="Nombre" size="10">
-	<input type="text" name="email" placeholder="Correo electrónico" size="15"><br>	
-	<input type="text" name="contraseña1" placeholder="Contraseña"   size="10"><br>	
-	<input type="text" name="contraseña2" placeholder="Contraseña"   size="10"><br>	
-	<input type="submit" value="Enviar" />
-	</fieldset>
+	<input type="text" name="nombre" placeholder="Nombre" 
+    value="<?= postvalor('nombre') ?>" size="10">
+	<input type="text" name="email" placeholder="Correo electrónico"
+    value="<?= postvalor('email')  ?>" size="15"><br>	
+	<input type="text" name="contraseña1" placeholder="Contraseña"  
+    value="<?= postvalor('contraseña1')  ?>" size="10"><br>	
+	<input type="text" name="contraseña2" placeholder="Contraseña" 
+    value="<?= postvalor('contraseña2') ?>"  size="10"><br>	
+	<input type="submit" value="Enviar" /> 
+    <input type="reset" value="Limpiar" />
+</fieldset>
 </form>
 </div>
 </div>
@@ -37,9 +42,9 @@ exit();
 // Proceso los datos
 
 // No hay valores vacios
-foreach ($_POST as $clave => $valor) {
+foreach ($_POST as $campo => $valor) {
     if (estaVacio($valor)){
-        echo "El campo $clave esta vacio ";
+        echo "El campo $campo esta vacio ";
         exit;
     }
    }
@@ -58,16 +63,17 @@ else if (  strlen($_POST['contraseña1']) < 8 ){
     
 }
 
-else if ( !hayMayusculas($clave) || !hayMinusculas($clave)){
+else if ( !hayMayusculas($_POST['contraseña1']) || !hayMinusculas($_POST['contraseña1'])){
     $msg = "Debe haber mayúsculas y minúsculas. ";
+    echo $_POST['contraseña1'];
     
 }
-else if ( !hayDigito($clave)){
+else if ( !hayDigito($_POST['contraseña1'])){
     $msg = " Debe haber algun dígito.";
     
 }
 
-else if ( !hayNoAlfanumerico($clave)){
+else if ( !hayNoAlfanumerico($_POST['contraseña1'])){
     $msg = " No hay nigún caracter no alfanumérico ";
           
 } else {
@@ -121,6 +127,14 @@ function hayNoAlfanumerico ($valor){
     return false;
 }
 
+function postvalor(string $elemento):string {
+    if ( isset($_POST[$elemento])){
+        $resu = $_POST[$elemento];
+    }else {
+        $resu= "";
+    }
+    return $resu;
+}
 
 ?>
 
