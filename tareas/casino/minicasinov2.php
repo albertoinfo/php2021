@@ -1,10 +1,3 @@
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Minicasino</title>
-</head>
-<body>
-
 <?php
 session_start();
 
@@ -13,10 +6,12 @@ if ( isset( $_COOKIE['visitascasino'])){
     $visitas = $_COOKIE['visitascasino'];
 }
 
+$msg="";
+
 
 if (! isset($_SESSION['disponible'])) {
     if ( empty($_POST['cantidadini'])) {
-        include "form_bienvenida.php";
+        require_once "form_bienvenida.php";
         exit();
     } else {
         // Me ha indicado la cantidad
@@ -27,20 +22,23 @@ if (! isset($_SESSION['disponible'])) {
 
 // Si realiza una apuesta
 if (isset($_POST["apostar"])) {
+    if ( is_numeric ($_POST["cantidad"]) and  $_POST["cantidad"] > 0 ) {
     $msg = procesarApuesta($_POST["cantidad"],$_SESSION['disponible'],$_POST['apuesta']);
-    echo $msg;
+    } else {
+    $msg = " El valor ". $_POST["cantidad"]." no es correcto.";
     }
+ }
 
- // Si abandona o ya no le queda dinero
-if (isset($_POST["dejar"]) || ($_SESSION["disponible"] == 0) ) {
+// Si abandona o ya no le queda dinero
+ if (isset($_POST["dejar"]) || ($_SESSION["disponible"] == 0) ) {
    dejarCasino($visitas);
+   require_once "despedida.php";
    exit();
 } 
 // Muestro el formulario
-include "form_apuesta.php";
+require_once  "form_apuesta.php";
 ?>
-</body>
-</html>
+
 
 <?php
 
@@ -51,15 +49,15 @@ include "form_apuesta.php";
 function procesarApuesta(int $valorapuesta, int & $saldodisponible, string $apuesta): String {
     $msgresultado = "";
     if ($valorapuesta > $saldodisponible ) {
-        $msgresultado .= "Error: no dispone de  $valorapuesta euros disponibles. <br> ";
+        $msgresultado .= "Error: no dispone de  $valorapuesta euros disponibles. ";
     } else {
         $resultado = (random_int(1, 100) % 2 == 0) ? "PAR" : "IMPAR";
-        $msgresultado .= " RESULTADO DE LA APUESTA : " . $resultado . "<br>";
+        $msgresultado .= " RESULTADO DE LA APUESTA : " . $resultado ;
         if ($apuesta == $resultado) {
-            $msgresultado .= "GANASTE <br>";
+            $msgresultado .= " GANASTE <br>";
             $saldodisponible  += $valorapuesta;
         } else {
-            $msgresultado .="PERDISTE <br>";
+            $msgresultado .=" PERDISTE <br>";
             $saldodisponible  -= $valorapuesta;
         }
     }
@@ -67,9 +65,7 @@ function procesarApuesta(int $valorapuesta, int & $saldodisponible, string $apue
 }
 
 function dejarCasino ($visitasrealizadas){
-    echo "Muchas gracias por jugar con nosotros. <br> ";
-    echo "Su resultado final es de ".$_SESSION['disponible']." Euros <br>";
     $visitasrealizadas++;
-    setcookie("visitascasino",$visitasrealizadas, time()+ 30 * 24 * 3600); // Un mes
+    setcookie("visitascasino",$visitasrealizadas, time()+ 30 * 24 * 3600); // Un mes  
     session_destroy();
 }
