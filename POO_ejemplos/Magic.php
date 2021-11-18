@@ -14,13 +14,13 @@ class Magic
     public function __set($nombre,$valor){
         // Compruebo un atributo concreto
         if ( $nombre == "atributo1"){
-            $this->atributo1 = $valor;
+            $this->atributo1 = $valor+1;
         }
         // Puedo detectar si es uno atributo 
         // Ej atributo2
-        // Admite el nombre de clase o un objeto
-        if ( property_exists($this, $nombre)){
-            $this->$nombre = $valor; // Ojo $nombre con DOLAR
+        $class = get_class($this);
+        if ( property_exists($class, $nombre)){
+            $this->$nombre = $valor; // Ojo $nombre
         } 
         
     }
@@ -28,12 +28,12 @@ class Magic
     public function __get($nombre){
         // Compruebo un atributo concreto
         if ( $nombre == "atributo1"){
-             return $this->atributo1;
+             return $this->atributo1*2;
         }
         // Puedo detectar si es uno atributo
         // Ej atributo2
-        $class = get_class($this);
-        if ( property_exists($class, $nombre)){
+       
+        if ( property_exists($this, $nombre)){
              return  $this->$nombre;
         }
         else{
@@ -42,16 +42,16 @@ class Magic
     }
     
     public function __toString() {
-        $resu  ="<p>Objeto de tipo ".get_class($this)."<br>\n";
-        $resu .="Atributo 1 = $this->atributo1 <br>\n";
-        $resu .="Atributo 2 = $this->atributo2 <br>\n";
+        $resu  ="<p>Objeto de tipo /n".get_class($this)."<br>";
+        $resu .="\n Atributo 1 = $this->atributo1 <br>";
+        $resu .="\n Atributo 2 = $this->atributo2 <br>";
         $resu .="</p>";
         return $resu;
     }
     
     
     private function noimplementada ($metodo){
-        echo " Error funcion $metodo no está implementada. \n";
+        echo " \n Error funcion $metodo no implementada. ";
     }
     
  
