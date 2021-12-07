@@ -40,7 +40,7 @@ class AccesoDatos {
 
         // Construyo las consultas previamente
 
-        $this->stmt_usuarios  = $this->dbh->prepare("select * from Ussuarios");
+        $this->stmt_usuarios  = $this->dbh->prepare("select * from Usuarios");
         if ( $this->stmt_usuarios == false) die (__FILE__.':'.__LINE__.$this->dbh->error);
 
         $this->stmt_usuario   = $this->dbh->prepare("select * from Usuarios where login =?");
