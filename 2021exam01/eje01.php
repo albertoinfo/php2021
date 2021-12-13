@@ -10,6 +10,8 @@ function unir ($claves, $valores):array{
 
 function separar ($tabla){
     $nuevo = [];
+    //$nuevo[0] =  array_keys($tabla);
+    //$nuevo[1] =  array_values($tabla);
     foreach ( $tabla as $clave => $valor){
        $nuevo[0][]=$clave;
        $nuevo[1][]=$valor;

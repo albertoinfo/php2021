@@ -1,7 +1,10 @@
-"15:11:2020 09:21",Jesús,"No hay conexión con la Base de datos",1,127.0.0.1
-"01:12:2020 22:45",Ramón,"No arranca la Base de Datos",1,127.0.0.1
 "02:12:2020 10:55",a,aas,1,192.168.105.1
 "02:12:2020 10:56",Guille,hola,1,192.168.105.97
+"23:11:2021 12:40",Pepito,"asdasd  adsd askjdkadsJ",1,127.0.0.1
+"23:11:2021 12:40",Pepito,"asdasd  adsd askjdkadsJ",1,127.0.0.1
+"23:11:2021 12:40",Pepito,"asdasd  adsd askjdkadsJ",1,127.0.0.1
+"15:11:2020 09:21",Jesús,"No hay conexión con la Base de datos",2,127.0.0.1
+"01:12:2020 22:45",Ramón,"No arranca la Base de Datos",2,127.0.0.1
 "13:11:2020 10:10",Ramón,"Error en el proxy",2,80.44.12.4
 "02:12:2020 10:55",laura,Hola,2,192.168.105.1
 "02:10:2020 21:52",Ana,"Cambiar pantalla en A206",3,192.168.12.2

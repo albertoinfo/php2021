@@ -10,7 +10,7 @@
  */
 
 echo " Conectando a la base de datos <br>";
-$conex = new mysqli("192.168.105.96", "root", "root", "Empresa"); // Abre una conexión
+$conex = new mysqli("localhost", "root", "root", "Empresa"); // Abre una conexión
 if ($conex->connect_errno) {
     // Comprueba conexión
     printf("Conexión fallida: %s\n", mysqli_connect_error());
@@ -64,7 +64,7 @@ if ($result = $conex->query( $query)) {
     while ( $obj = $result->fetch_object() ) {
         echo "<tr>";
         echo "<td>$obj->EMP_NO</td>";
-        echo "<td>$obj->APELLIDO</td>";
+        echo "<td>$obj->apellido</td>";
         echo "<td>$obj->SALARIO</td>";
         echo "</tr>";
     }
