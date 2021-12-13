@@ -12,11 +12,6 @@ class AccesoDatos {
     
     private static $modelo = null;
     private $dbh = null;
-    private $stmt_usuarios = null;
-    private $stmt_usuario  = null;
-    private $stmt_boruser  = null;
-    private $stmt_moduser  = null;
-    private $stmt_creauser = null;
     
     public static function getModelo(){
         if (self::$modelo == null){
@@ -38,22 +33,6 @@ class AccesoDatos {
          die(" Error en la conexión ".$this->dbh->connect_errno);
         } 
 
-        // Construyo las consultas previamente
-
-        $this->stmt_usuarios  = $this->dbh->prepare("select * from Usuarios");
-        if ( $this->stmt_usuarios == false) die (__FILE__.':'.__LINE__.$this->dbh->error);
-
-        $this->stmt_usuario   = $this->dbh->prepare("select * from Usuarios where login =?");
-        if ( $this->stmt_usuario == false) die ($this->dbh->error);
-
-        $this->stmt_boruser   = $this->dbh->prepare("delete from Usuarios where login =?");
-        if ( $this->stmt_boruser == false) die ($this->dbh->error);
-
-        $this->stmt_moduser   = $this->dbh->prepare("update Usuarios set nombre=?, password=?, comentario=? where login=?");
-        if ( $this->stmt_moduser == false) die ($this->dbh->error);
-
-        $this->stmt_creauser  = $this->dbh->prepare("insert into Usuarios (login,nombre,password,comentario) Values(?,?,?,?)");
-        if ( $this->stmt_creauser == false) die ($this->dbh->error);
     }
 
     // Cierro la conexión anulando todos los objectos relacioanado con la conexión PDO (stmt)
@@ -70,15 +49,22 @@ class AccesoDatos {
     // SELECT Devuelvo la lista de Usuarios
     public function getUsuarios ():array {
         $tuser = [];
-        
-        $this->stmt_usuarios->execute();
-
-        $result = $this->stmt_usuarios->get_result();
+        // Crea la sentencia preparada
+        $stmt_usuarios  = $this->dbh->prepare("select * from Usuarios");
+        // Si falla termian el programa
+        if ( $stmt_usuarios == false) die (__FILE__.':'.__LINE__.$this->dbh->error);
+        // Ejecuto la sentencia
+        $stmt_usuarios->execute();
+        // Obtengo los resultados
+        $result = $stmt_usuarios->get_result();
+        // Si hay resultado correctos
         if ( $result ){
+            // Obtengo cada fila de la respuesta como un objeto de tipo Usuario
             while ( $user = $result->fetch_object('Usuario')){
                $tuser[]= $user;
             }
         }
+        // Devuelvo el array de objetos
         return $tuser;
     }
     
@@ -86,9 +72,13 @@ class AccesoDatos {
     public function getUsuario (String $login) {
         $user = false;
         
-        $this->stmt_usuario->bind_param("s",$login);
-        $this->stmt_usuario->execute();
-        $result = $this->stmt_usuario->get_result();
+        $stmt_usuario   = $this->dbh->prepare("select * from Usuarios where login =?");
+        if ( $stmt_usuario == false) die ($this->dbh->error);
+
+        // Enlazo $login con el primer ? 
+        $stmt_usuario->bind_param("s",$login);
+        $stmt_usuario->execute();
+        $result = $stmt_usuario->get_result();
         if ( $result ){
             $user = $result->fetch_object('Usuario');
             }
@@ -99,10 +89,11 @@ class AccesoDatos {
     // UPDATE
     public function modUsuario($user):bool{
       
-    
-        $this->stmt_moduser->bind_param("ssss",
-        $user->nombre,$user->password, $user->comentario, $user->login);
-        $this->stmt_moduser->execute();
+        $stmt_moduser   = $this->dbh->prepare("update Usuarios set nombre=?, password=?, comentario=? where login=?");
+        if ( $stmt_moduser == false) die ($this->dbh->error);
+
+        $stmt_moduser->bind_param("ssss",$user->nombre,$user->password, $user->comentario, $user->login);
+        $stmt_moduser->execute();
         $resu = ($this->dbh->affected_rows  == 1);
         return $resu;
     }
@@ -110,16 +101,22 @@ class AccesoDatos {
     //INSERT
     public function addUsuario($user):bool{
        
-        $this->stmt_creauser->bind_param("ssss",$user->login, $user->nombre, $user->password, $user->comentario);
-        $this->stmt_creauser->execute();
+        $stmt_creauser  = $this->dbh->prepare("insert into Usuarios (login,nombre,password,comentario) Values(?,?,?,?)");
+        if ( $stmt_creauser == false) die ($this->dbh->error);
+
+        $stmt_creauser->bind_param("ssss",$user->login, $user->nombre, $user->password, $user->comentario);
+        $stmt_creauser->execute();
         $resu = ($this->dbh->affected_rows  == 1);
         return $resu;
     }
 
     //DELETE
     public function borrarUsuario(String $login):bool {
-        $this->stmt_boruser->bind_param("s", $login);
-        $this->stmt_boruser->execute();
+        $stmt_boruser   = $this->dbh->prepare("delete from Usuarios where login =?");
+        if ( $stmt_boruser == false) die ($this->dbh->error);
+       
+        $stmt_boruser->bind_param("s", $login);
+        $stmt_boruser->execute();
         $resu = ($this->dbh->affected_rows  == 1);
         return $resu;
     }   
