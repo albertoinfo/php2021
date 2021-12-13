@@ -103,7 +103,7 @@ class AccesoDatos {
         $stmt_creapro  = $this->dbh->prepare("insert into PRODUCTOS (PRODUCTO_NO,DESCRIPCION, PRECIO_ACTUAL, STOCK_DISPONIBLE) Values(?,?,?,?)");
         if ( $stmt_creapro == false) die ($this->dbh->error);
 
-        $stmt_creapro->bind_param("ssss", $pro->PRODUCTO_NO,$pro->DESCRIPCION,$pro->PRECIO_ACTUAL, $pro->STOCK_DISPLONIBLE);
+        $stmt_creapro->bind_param("ssss", $pro->PRODUCTO_NO,$pro->DESCRIPCION,$pro->PRECIO_ACTUAL, $pro->STOCK_DISPONIBLE);
         $stmt_creapro->execute();
         $resu = ($this->dbh->affected_rows  == 1);
         return $resu;
