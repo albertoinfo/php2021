@@ -1,6 +1,6 @@
-
-
-
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,10 +15,31 @@
 <div id="content">
 
 <?php
+
+if ( isset($_SESSION['Nombre']) &&  $_SERVER['REQUEST_METHOD'] == "GET") {
+    echo " $_SESSION[Nombre] Bienvenido al sistema <br>";
+    echo " Has entrado $_SESSION[accesos] veces <br>";
+    ?>
+    <form method="POST">
+     <input type="submit" name="orden" value="Salir">
+    </form>
+    </div>
+    </body>
+    </html>
+    <?php
+    exit();
+}
+
 // EJEMPLO DE CONEXIÓN A LA BASE DE DATOS
 // Utilizando el interfaz PDO
 
 if ( $_SERVER['REQUEST_METHOD'] == "POST"){
+
+    if ($_POST['orden'] == "Salir"){
+        session_destroy();
+        header("refresh:0");
+        exit();
+    }
     
     try {
         $dsn = "mysql:host=localhost;dbname=Prueba";
@@ -34,7 +55,6 @@ if ( $_SERVER['REQUEST_METHOD'] == "POST"){
     $login=   ($_POST['login']);
     $passwd = ($_POST['passwd']);
     
-    
     // Sentencia preparada
     $stmt = $dbh->prepare("SELECT * FROM Usuario WHERE login = ? and passwd = ?");
     $stmt->bindValue(1,$login);
@@ -43,17 +63,20 @@ if ( $_SERVER['REQUEST_METHOD'] == "POST"){
     $stmt->setFetchMode(PDO::FETCH_ASSOC);
     if ( $stmt->execute() ){
         if ( $fila = $stmt->fetch()) {
-            var_dump($fila);
-            echo " $fila[Nombre]: Bienvenido al sistema <br>";
-            echo " Has entrado $fila[accesos] veces <br>";
+            $_SESSION['Nombre'] = $fila['Nombre'];
+            $_SESSION['accesos'] =$fila['accesos'];
             $fila['accesos']++;
-            $consulta = "UPDATE Usuario SET accesos = $fila[accesos]  where login ='$login'";
+            $consulta = "UPDATE Usuario SET accesos = $fila[accesos] where login ='$_POST[login]'";
             // Consulta directa
             if ($dbh->exec($consulta) == 0){
                 echo " ERROR UPDATE en la BD ".print_r($dbh->errorInfo())."<br>";
+            } else {
+                header("refresh:0");
             }
+
         } else {
             echo "El identificador y/o la contraseña no son correctos.<br>";
+            // Incluir mejora bloqueo de cuenta tras 3 fallos consecutivos !!!
                 
         }
     } else {
