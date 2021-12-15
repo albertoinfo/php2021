@@ -1,5 +1,12 @@
 <?php
+/* CONTROL DE ACCESO A UNA APLICACIÓN
+*  - Valida contra la base de datos
+*  - Desconexta pasado 60 segundo sin volver a acceder
+*  - Bloquea el acceso tras más de tres fallos consecutivos
+*/
+
 session_start();
+$mensaje = "";
 
 // Control de tiempo de la sesión 
 if ( isset($_SESSION['timeout'])) {
@@ -12,36 +19,13 @@ if ( isset($_SESSION['timeout'])) {
     }
 }
 
-
-
-?>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<link href="default.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-<div id="container" style="width: 400px;">
-<div id="header">
-<h1>ACCESO AL SISTEMA</h1>
-</div>
-<div id="content">
-
-<?php
+// HA ENTRADO EN LA APLICACIÓN Y NO PULSA SALIR
 
 if ( isset($_SESSION['Nombre']) &&  $_SERVER['REQUEST_METHOD'] == "GET") {
-    echo " $_SESSION[Nombre] Bienvenido al sistema <br>";
-    echo " Has entrado $_SESSION[accesos] veces <br>";
+    $mensaje = " $_SESSION[Nombre] Bienvenido al sistema <br>";
+    $mensaje .= " Has entrado $_SESSION[accesos] veces <br>";
     $_SESSION['timeout'] = time(); // Actualizo la temporización
-    ?>
-    <form method="POST">
-     <input type="submit" name="orden" value="Salir">
-    </form>
-    </div>
-    </body>
-    </html>
-    <?php
+    include_once 'vistaapp.php';
     exit();
 }
 
@@ -87,16 +71,16 @@ if ( $_SERVER['REQUEST_METHOD'] == "POST"){
             $consulta = "UPDATE Usuario SET accesos = $fila[accesos] where login ='$_POST[login]'";
             // Consulta directa
             if ($dbh->exec($consulta) == 0){
-                echo " ERROR UPDATE en la BD ".print_r($dbh->errorInfo())."<br>";
+                $mensaje = " ERROR UPDATE en la BD ".print_r($dbh->errorInfo())."<br>";
             } else {
                 header("refresh:0");
             }
         } else {
-            echo " Lo sentimos la cuenta $login está bloqueada ";
+               $mensaje = " Lo sentimos la cuenta $login está bloqueada ";
         }
           // Login Ok password error
           } else {
-            echo "El identificador y/o la contraseña no son correctos**.<br>";
+            $mensaje = "El identificador y/o la contraseña no son correctos**.<br>";
             // Si ha fallado en el mismo usuario 
             if (isset ($_SESSION['NombreError']) && $_SESSION['NombreError'] == $login){
                 $_SESSION['errorPassword']++;
@@ -104,7 +88,7 @@ if ( $_SERVER['REQUEST_METHOD'] == "POST"){
                     $stmt = $dbh->prepare("UPDATE Usuario SET bloqueo = 1 where login =:login");
                     $stmt->bindValue(":login",$login);
                     $stmt->execute();
-                    echo " la cuenta $login ha sido bloqueada pongase en contacto con el administrador.";
+                    $mensaje =  " la cuenta $login ha sido bloqueada pongase en contacto con el administrador.";
                  
                 }    
             } else {
@@ -115,31 +99,14 @@ if ( $_SERVER['REQUEST_METHOD'] == "POST"){
           } 
 
         } else {
-            echo "El identificador y/o la contraseña no son correctos.<br>";
+            $mensaje = "El identificador y/o la contraseña no son correctos.<br>";
             // Incluir mejora bloqueo de cuenta tras 3 fallos consecutivos !!!
                 
         }
     } else {
-        echo " ERROR de consulta a la BD ".print_r($dbh->errorInfo())."<br>";
+        $mensaje = " ERROR de consulta a la BD ".print_r($dbh->errorInfo())."<br>";
     }
     
 }
-?>
-			<form name='entrada' method="POST" >
-				<table  style="border: node; ">
-					<tr>
-						<td>identificador:</td>
-						<td><input type="text" name="login" size="20"></td>
-					</tr>
-					<tr>
-						<td>Contraseña:</td>
-						<td><input type="password" name="passwd" size="20"></td>
-					</tr>
-				</table>
-				<input type="submit" name="orden" value="Entrar">
-			</form>
-		</div>
-		<p>
-	</div>
-</body>
-</html>
+
+include_once 'vistaloginapp.php';
