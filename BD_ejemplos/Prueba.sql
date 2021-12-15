@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `Usuario`
 --
 
-CREATE TABLE `Usuario` (
+CREATE TABLE `Usuarios` (
   `login` varchar(8) NOT NULL,
   `passwd` varchar(10) NOT NULL,
   `Nombre` varchar(15) NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE `Usuario` (
 -- Volcado de datos para la tabla `Usuario`
 --
 
-INSERT INTO `Usuario` (`login`, `passwd`, `Nombre`, `accesos`) VALUES
+INSERT INTO `Usuarios` (`login`, `passwd`, `Nombre`, `accesos`) VALUES
 ('admin', 'admin', 'Administrador', 10),
 ('patata', '123456', 'manolo', 351),
 ('user01', '12345', 'Usuario Pepe', 2);
@@ -49,7 +49,7 @@ INSERT INTO `Usuario` (`login`, `passwd`, `Nombre`, `accesos`) VALUES
 --
 -- Indices de la tabla `Usuario`
 --
-ALTER TABLE `Usuario`
+ALTER TABLE `Usuarios`
   ADD PRIMARY KEY (`login`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
