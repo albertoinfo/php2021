@@ -26,7 +26,7 @@
 					</tr>
 				</table>
 				<?php if ( isset($activarcaptcha ))  :?>
-				<div class="g-recaptcha" data-sitekey="6LdpvqUdAAAAAB8NabKzJle5CI4vzsReTLFtlMzT"></div>
+				<div class="g-recaptcha" data-sitekey="6Ldpv......"></div>
 				<?php endif; ?>
 				<input type="submit" name="orden" value="Entrar">
 			</form>
