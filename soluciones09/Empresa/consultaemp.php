@@ -6,7 +6,7 @@ $db = AccesoDatos::initModelo();
 $tclientes = $db->consulta0();
 ?>
 <html>
-<head>
+<head
 <meta charset="UTF-8">
 <title>CONSULTAS A EMPRESA </title>
 <style>
@@ -34,7 +34,7 @@ Mostrar Código y apellido de TODOS los empleados y ciudad donde trabajan.<br>
 Mostrar productos no pedidos por el cliente.
 <select name="cliente">
 <?php   foreach ($tclientes as $cliente): ?>
-<option value="<?=$cliente['CLIENTE_NO']?> >"
+<option value="<?=$cliente['CLIENTE_NO']?>"
 <?= (isset($_POST['cliente']) && $_POST['cliente'] == $cliente['CLIENTE_NO'])?"selected":"" ?>>
  <?=$cliente['NOMBRE'] ?></option>
 <?php endforeach; ?>
@@ -47,6 +47,7 @@ Mostrar productos no pedidos por el cliente.
 <?php
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+   
     switch ($_REQUEST['consulta']){
         case 1:verresu($db->consulta1(intval($_POST['precio'])));break;
         case 2:verresu($db->consulta2());break;

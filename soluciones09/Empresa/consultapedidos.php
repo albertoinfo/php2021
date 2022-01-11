@@ -1,9 +1,3 @@
-<?php
-session_start();
-include_once('AccesoDatos2.php');
-$db = AccesoDatos2::initModelo();
-?>
-
 <html>
 <head>
 <meta charset="UTF-8">
@@ -23,8 +17,12 @@ table, td, th {
 Indicar el código de cliente:<input type="text" name="cliente_no" size=8><br>
 </form>
 <?php 
+include_once('AccesoDatos2.php');
 
-// Ver los pedidos PRIMERA CONSULTA 
+session_start();
+
+$db = AccesoDatos2::initModelo();
+// Ver los pedidos 
 if (!empty($_POST['cliente_no']) && empty($_POST['procesar'])){
     $cliente_no = $_POST['cliente_no'];
     if (!$db->checkCliente($cliente_no)){
@@ -33,7 +31,7 @@ if (!empty($_POST['cliente_no']) && empty($_POST['procesar'])){
     }
     // Lo guardo en la sesion para poder procesarlo
     $_SESSION['cliente_no']=$cliente_no;
-    echo "<h2> PROCESANDO LOS PEDIDOS DEL CLIENTE Nº ".$cliente_no."</h2>";
+    
     echo " <h2> Pedidos disponibles para entregar </h2> ";
     $tabla1 = $db->consultaPedidosDisponibles($cliente_no);
     verresu($tabla1);
@@ -48,7 +46,6 @@ if (!empty($_POST['cliente_no']) && empty($_POST['procesar'])){
 	</form>
     <?php      
 }
-// SEGUNDA CONSULTA
 if (!empty($_POST['procesar'])){
     $cliente_no = $_SESSION['cliente_no'];
     // Deberia procesarse en una transacción o bloqueo
