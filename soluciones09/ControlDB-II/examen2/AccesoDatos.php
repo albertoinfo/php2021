@@ -44,10 +44,9 @@ class AccesoDatos {
 
         // Devuelvo una tabla de objetos 
         $stmt->setFetchMode(PDO::FETCH_CLASS, 'Producto');
+        $tobjproductos=[];
         if ( $stmt->execute() ){
-            while ( $obj = $stmt->fetch()){
-               $tobjproductos[]= $obj;
-            }
+            $tobjproductos = $stmt->fetchAll();
         }
         return $tobjproductos;
     }

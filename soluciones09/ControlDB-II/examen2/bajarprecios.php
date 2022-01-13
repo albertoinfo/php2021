@@ -5,13 +5,8 @@ include_once 'Producto.php';
 $ac = AccesoDatos::initModelo();
 
 
-if  (isset($_POST['orden'])){
-    $tProductoNoActualizar=[];
-    foreach ($_POST as $clave => $valor ) {
-        if (is_numeric($clave)){
-            $tProductoNoActualizar[]=$clave;
-        }
-    }
+if  (isset($_POST['orden']) && isset($_POST["tproductos"])){
+    $tProductoNoActualizar=$_POST["tproductos"];
     $ac->actualizarPrecios($tProductoNoActualizar);
 }
 // Obtiene la lista de productos actual 
@@ -41,7 +36,7 @@ $tproductos = $ac->obtenerListaProductos();
 			    </tr>
 			    <?php  foreach ($tproductos as $pro): ?>
 			    <tr>
-				<td><input type="checkbox" name="<?=$pro->producto_no ?>"></td>
+				<td><input type="checkbox" name="tproductos[]" value="<?=$pro->producto_no ?>"></td>
 				<td><?=$pro->producto_no ?></td>
 				<td><?=$pro->descripcion  ?></td>
 				<td><?=$pro->stock_disponible ?></td>
