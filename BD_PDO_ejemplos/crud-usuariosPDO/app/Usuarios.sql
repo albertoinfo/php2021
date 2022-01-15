@@ -7,7 +7,7 @@
 -- Versión del servidor: 8.0.22-0ubuntu0.20.04.3
 -- Versión de PHP: 7.4.3
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 

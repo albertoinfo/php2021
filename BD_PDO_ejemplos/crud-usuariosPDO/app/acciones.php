@@ -9,6 +9,7 @@ function accionBorrar ($login){
 function accionTerminar(){
     AccesoDatos::closeModelo();
     session_destroy();
+    header("Refresh:0 url='./index.php'");
 }
  
 function accionAlta(){

@@ -14,8 +14,8 @@
 <div id="content">
 <?= $contenido ?>
 <form>
-<input type="submit" name="orden" value="Nuevo">
-<input type="submit" name="orden" value="Terminar">
+<button name="orden" value="Nuevo"> Nuevo </button>
+<button name="orden" value="Terminar"> Terminar </button>
 </form>
 </div>
 </div>

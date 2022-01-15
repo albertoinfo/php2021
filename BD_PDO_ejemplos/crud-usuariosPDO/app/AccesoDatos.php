@@ -109,7 +109,7 @@ class AccesoDatos {
 
     //DELETE
     public function borrarUsuario(String $login):bool {
-        $this->stmt_boruser->bindParam(':login', $login);
+        $this->stmt_boruser->bindValue(':login', $login);
         $this->stmt_boruser->execute();
         $resu = ($this->stmt_boruser->rowCount () == 1);
         return $resu;
